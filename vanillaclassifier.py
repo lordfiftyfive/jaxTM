@@ -11,6 +11,9 @@ import logging
 import jax
 import jax.numpy as jnp
 
+import taichi as ti
+import taichi.math as tm
+
 _LOGGER = logging.getLogger(__name__)
 
 
