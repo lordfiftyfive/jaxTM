@@ -16,6 +16,7 @@ import taichi.math as tm
 
 _LOGGER = logging.getLogger(__name__)
 
+ti.init(arch=ti.gpu)
 
 class TMClassifier(TMBaseModel, MultiClauseBankMixin, MultiWeightBankMixin):
     def __init__(
@@ -230,6 +231,9 @@ class TMClassifier(TMBaseModel, MultiClauseBankMixin, MultiWeightBankMixin):
         literal_active = jnp.zeros(self.clause_banks[0].number_of_ta_chunks, dtype=np.uint32)
         literal_active_integer = self.rng.rand(self.clause_banks[0].number_of_literals) >= self.literal_drop_p
 
+        #n = 128
+        #val = ti.field(ti.i32, shape=n)
+        #ti.loop_config(parallelize=8, block_dim=16)
         for k in range(self.clause_banks[0].number_of_literals):
             if literal_active_integer[k] == 1:
                 ta_chunk = k // 32
